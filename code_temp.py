@@ -59,7 +59,7 @@ for new_list in ex_list:
 
         # 既存のExcelファイルを読み込む
         existing_file = f"out_st_{num}.xlsx"
-        writer = pd.ExcelWriter(existing_file, engine='openpyxl', mode='a')
+        writer = pd.ExcelWriter(existing_file, engine='openpyxl', mode='a', if_sheet_exists='replace')
 
         # リストをDataFrameに変換
         df = pd.DataFrame(fin_list)
