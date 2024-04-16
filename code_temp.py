@@ -37,37 +37,21 @@ filtered_list = [d for d in tick_list if exclude_key not in d or d[exclude_key] 
 codes = [d["Code"] for d in filtered_list]
 new_list = [int(str(num)[:-1]) for num in codes]
 
-ex_list = []
+for i_code in new_list:
+    a = requests.get(f"https://api.jquants.com/v1/fins/statements?code={i_code}", headers=headers)
+    st = a.json()
+    fin_list = st["statements"]
 
-for num in range(2,11):
-    split_list = []
+    # 既存のExcelファイルを読み込む
+    existing_file = "out_st.xlsx"
+    writer = pd.ExcelWriter(existing_file, engine='openpyxl', mode='a', if_sheet_exists='replace')
 
-    for i in new_list:
-        if (num-1) * 1000 < i < num * 1000:
-            split_list.append(i)        
+    # リストをDataFrameに変換
+    df = pd.DataFrame(fin_list)
 
-    ex_list.append(split_list)                
+    # データを既存のExcelファイルに書き込む（シート名を指定して）
+    df.to_excel(writer, sheet_name=f"{i_code}", index=False)
 
-num = 0
-
-for new_list in ex_list:
-    num += 1
-    for i_code in new_list:
-        a = requests.get(f"https://api.jquants.com/v1/fins/statements?code={i_code}", headers=headers)
-        st = a.json()
-        fin_list = st["statements"]
-
-        # 既存のExcelファイルを読み込む
-        existing_file = f"out_st_{num}.xlsx"
-        writer = pd.ExcelWriter(existing_file, engine='openpyxl', mode='a', if_sheet_exists='replace')
-
-        # リストをDataFrameに変換
-        df = pd.DataFrame(fin_list)
-
-        # データを既存のExcelファイルに書き込む（シート名を指定して）
-        df.to_excel(writer, sheet_name=f"{i_code}", index=False)
-
-        # ファイルを保存してExcelWriterを閉じる
-        writer._save()
-        writer.close()
-    
+    # ファイルを保存してExcelWriterを閉じる
+    writer._save()
+    writer.close()
