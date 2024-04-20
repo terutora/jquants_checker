@@ -1,6 +1,30 @@
-body{
+header{ 
     background-color: cadetblue;
-    color: white;
     font-size: 3em;
-    font-family: fantasy;
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+    margin: 0 0 1em 0;
+}
+
+nav{
+    margin: 1em;
+    border-radius: 10px;
+    border-width: medium;
+    border-color: black;
+    border-style: double;
+    background-color: rgb(204, 232, 223);
+    
+}
+h2{
+    text-indent: 0.3em;
+    width: 30%;
+    margin: 1em;
+    padding: 0;
+    border-width: 0 0 medium 0;
+    border-style: ridge;
+    border-color: black;
+}
+
+p{
+    margin: 0.5em;
 }
