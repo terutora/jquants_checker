@@ -1,9 +1,12 @@
 header{ 
+    position: sticky;
+    width: 100%;
     background-color: cadetblue;
+    opacity: 0.9;
     font-size: 3em;
     padding-top: 0.5em;
-    padding-left: 0.5em;
-    margin: 0 0 1em 0;
+    top: 0;
+    z-index: 999;
 }
 
 nav{
@@ -15,6 +18,12 @@ nav{
     background-color: rgb(204, 232, 223);
     
 }
+
+img{
+    max-width: 100%;
+    height: auto;
+}
+
 h2{
     text-indent: 0.3em;
     width: 30%;
@@ -27,4 +36,12 @@ h2{
 
 p{
     margin: 0.5em;
+}
+
+footer{
+    padding: 0.5em;
+    background-color: black;
+    color: white;
+    margin: 0;
+    text-align: center;
 }
