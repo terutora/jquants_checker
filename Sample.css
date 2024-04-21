@@ -1,47 +1,59 @@
-header{ 
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
     position: sticky;
-    width: 100%;
+    top: 0;
     background-color: cadetblue;
     opacity: 0.9;
-    font-size: 3em;
-    padding-top: 0.5em;
-    top: 0;
+    padding: 10px;
     z-index: 999;
 }
 
-nav{
-    margin: 1em;
-    border-radius: 10px;
-    border-width: medium;
-    border-color: black;
-    border-style: double;
-    background-color: rgb(204, 232, 223);
-    
+.container {
+    display: flex;
 }
 
-img{
+nav {
+    position: sticky;
+    top: 100px;
+    width: 200px;
+    min-width: 200px; /* 最小幅を指定 */
+    max-width: 200px; /* 最大幅を指定 */
+    height: 100vh;
+    background-color: rgb(204, 232, 223);
+    border-radius: 10px;
+    border: double black;
+    margin-left: 10px;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    scroll-padding-top: 100px
+}
+
+main img {
     max-width: 100%;
     height: auto;
 }
 
-h2{
+h2 {
     text-indent: 0.3em;
     width: 30%;
-    margin: 1em;
-    padding: 0;
-    border-width: 0 0 medium 0;
-    border-style: ridge;
-    border-color: black;
+    margin: 1em 0;
+    border-bottom: medium ridge black;
 }
 
-p{
-    margin: 0.5em;
+p {
+    margin: 0.5em 0;
 }
 
-footer{
-    padding: 0.5em;
+footer {
     background-color: black;
     color: white;
-    margin: 0;
+    padding: 10px;
     text-align: center;
 }
