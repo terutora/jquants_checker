@@ -28,6 +28,12 @@ header {
     font-size: 16px; /* テキスト入力フィールドのフォントサイズを設定 */
 }
 
+.logo-search button[type="submit"] {
+    height: 40px; /* 送信ボタンの高さを設定 */
+    padding: 5px 10px; /* 送信ボタンの内側の余白を設定 */
+    font-size: 16px; /* 送信ボタンのフォントサイズを設定 */
+}
+
 .container {
     display: flex;
 }
