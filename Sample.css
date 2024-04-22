@@ -12,6 +12,22 @@ header {
     z-index: 999;
 }
 
+.logo-search {
+    display: flex; /* Flexboxを使用して要素を横並びに配置 */
+    align-items: center; /* 縦方向の中央揃え */
+}
+
+.logo-search form {
+    margin-left: 50px; /* 画像とフォームの間に隙間を設定 */
+}
+
+.logo-search input[type="text"] {
+    width: 300px; /* テキスト入力フィールドの幅を設定 */
+    height: 40px; /* テキスト入力フィールドの高さを設定 */
+    padding: 5px; /* テキスト入力フィールドの内側の余白を設定 */
+    font-size: 16px; /* テキスト入力フィールドのフォントサイズを設定 */
+}
+
 .container {
     display: flex;
 }
