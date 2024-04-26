@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS stock_codes (
 """
 cursor.execute(create_table_query)
 
-"""
 # 特定の環境変数を取得
 MY_EMAIL = os.environ.get('my_email')
 PASS = os.environ.get('password')
@@ -57,11 +56,28 @@ exclude_value = 'その他'    # 除外する値
 filtered_list = [d for d in tick_list if exclude_key not in d or d[exclude_key] != exclude_value]
 
 codes = [d["Code"] for d in filtered_list]
-new_list = [int(str(num)[:-1]) for num in codes]
-
-for i_code in new_list:
+'''
+for i_code in codes:
     a = requests.get(f"https://api.jquants.com/v1/fins/statements?code={i_code}", headers=headers)
     st = a.json()
     fin_list = st["statements"]
+'''
+a = requests.get(f"https://api.jquants.com/v1/fins/statements?code={1301}", headers=headers)
+st = a.json()
+fin_list = st["statements"]
 
-"""
+for item in fin_list:
+    # データを挿入するクエリを動的に生成する
+    insert_query = f"INSERT INTO stock_codes ({', '.join(item.keys())}) VALUES ({', '.join(['%s' for _ in item])})"
+    
+    # データを挿入する
+    cursor.execute(insert_query, tuple(item.values()))
+
+
+
+# コミットして変更を保存
+conn.commit()
+
+# 接続を閉じる
+cursor.close()
+conn.close()
