@@ -5,10 +5,15 @@ import os
 from openpyxl import Workbook
 import mysql.connector
 
+# 特定の環境変数を取得
+MY_EMAIL = os.environ.get('my_email')
+PASS = os.environ.get('password')
+PASSWORD = os.environ.get('pass')
+
 config = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'Tachi877_mysql',
+    "password": PASSWORD,
     'database': 'finance_db'
 }
 
@@ -25,9 +30,6 @@ CREATE TABLE IF NOT EXISTS stock_codes (
 """
 cursor.execute(create_table_query)
 
-# 特定の環境変数を取得
-MY_EMAIL = os.environ.get('my_email')
-PASS = os.environ.get('password')
 
 # リフレッシュトークンを取得
 resp = requests.post(
