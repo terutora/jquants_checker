@@ -146,6 +146,7 @@ resp = requests.post(
 ID_TOKEN = resp.json()["idToken"]
 
 headers = {'Authorization': 'Bearer {}'.format(ID_TOKEN)}
+'''
 r = requests.get("https://api.jquants.com/v1/listed/info", headers=headers)
 list = r.json()
 tick_list = list["info"]
@@ -157,7 +158,7 @@ exclude_value = 'その他'    # 除外する値
 filtered_list = [d for d in tick_list if exclude_key not in d or d[exclude_key] != exclude_value]
 
 codes = [d["Code"] for d in filtered_list]
-'''
+
 for i_code in codes:
     a = requests.get(f"https://api.jquants.com/v1/fins/statements?code={i_code}", headers=headers)
     st = a.json()
@@ -167,15 +168,15 @@ a = requests.get(f"https://api.jquants.com/v1/fins/statements?code={1301}", head
 st = a.json()
 f_list = st["statements"]
 
-# 除外するキーを含む辞書を除外する
+# 特定のキーを除外して新たに辞書を作成
 
-fin_list = [d for d in f_list if 'NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock' not in d or 'DistributionsPerUnit(REIT)' not in d or 'ForecastDistributionsPerUnit(REIT)' not in d or 'NextYearForecastDistributionsPerUnit(REIT)' not in d]
+fin_list = [{k: v for k, v in d.items() if k not in ['NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock', 'NextYearForecastDistributionsPerUnit(REIT)', 'DistributionsPerUnit(REIT)', 'ForecastDistributionsPerUnit(REIT)']} for d in f_list]
 
 # リストのデータをテーブルに挿入
 for item in fin_list:
     columns = ', '.join(item.keys())
     placeholders = ', '.join(['%s'] * len(item))
-    insert_query = f"INSERT INTO code_info ({columns}) VALUES ({placeholders})"
+    insert_query = f"INSERT INTO code_db ({columns}) VALUES ({placeholders})"
     cursor.execute(insert_query, tuple(item.values()))
 
 # コミットして変更を保存
