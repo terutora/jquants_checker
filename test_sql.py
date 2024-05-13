@@ -1,8 +1,6 @@
 import json
-import pandas as pd
 import requests
 import os
-from openpyxl import Workbook
 import mysql.connector
 
 # 特定の環境変数を取得
@@ -24,9 +22,8 @@ cursor = conn.cursor()
 create_table_query = """
 CREATE TABLE IF NOT EXISTS code_db (
     DisclosedDate VARCHAR(255),
-    DisclosedTime VARCHAR(255),
     LocalCode VARCHAR(255),
-    DisclosureNumber VARCHAR(255),
+    DisclosureNumber VARCHAR(255) UNIQUE,
     TypeOfDocument VARCHAR(255),
     TypeOfCurrentPeriod VARCHAR(255),
     CurrentPeriodStartDate VARCHAR(255),
@@ -104,27 +101,7 @@ CREATE TABLE IF NOT EXISTS code_db (
     NonConsolidatedTotalAssets VARCHAR(255),
     NonConsolidatedEquity VARCHAR(255),
     NonConsolidatedEquityToAssetRatio VARCHAR(255),
-    NonConsolidatedBookValuePerShare VARCHAR(255),
-    ForecastNonConsolidatedNetSales2ndQuarter VARCHAR(255),
-    ForecastNonConsolidatedOperatingProfit2ndQuarter VARCHAR(255),
-    ForecastNonConsolidatedOrdinaryProfit2ndQuarter VARCHAR(255),
-    ForecastNonConsolidatedProfit2ndQuarter VARCHAR(255),
-    ForecastNonConsolidatedEarningsPerShare2ndQuarter VARCHAR(255),
-    NextYearForecastNonConsolidatedNetSales2ndQuarter VARCHAR(255),
-    NextYearForecastNonConsolidatedOperatingProfit2ndQuarter VARCHAR(255),
-    NextYearForecastNonConsolidatedOrdinaryProfit2ndQuarter VARCHAR(255),
-    NextYearForecastNonConsolidatedProfit2ndQuarter VARCHAR(255),
-    NextYearForecastNonConsolidatedEarningsPerShare2ndQuarter VARCHAR(255),
-    ForecastNonConsolidatedNetSales VARCHAR(255),
-    ForecastNonConsolidatedOperatingProfit VARCHAR(255),
-    ForecastNonConsolidatedOrdinaryProfit VARCHAR(255),
-    ForecastNonConsolidatedProfit VARCHAR(255),
-    ForecastNonConsolidatedEarningsPerShare VARCHAR(255),
-    NextYearForecastNonConsolidatedNetSales VARCHAR(255),
-    NextYearForecastNonConsolidatedOperatingProfit VARCHAR(255),
-    NextYearForecastNonConsolidatedOrdinaryProfit VARCHAR(255),
-    NextYearForecastNonConsolidatedProfit VARCHAR(255),
-    NextYearForecastNonConsolidatedEarningsPerShare VARCHAR(255)
+    NonConsolidatedBookValuePerShare VARCHAR(255)
     )
 """
 cursor.execute(create_table_query)
@@ -146,37 +123,50 @@ resp = requests.post(
 ID_TOKEN = resp.json()["idToken"]
 
 headers = {'Authorization': 'Bearer {}'.format(ID_TOKEN)}
-'''
-r = requests.get("https://api.jquants.com/v1/listed/info", headers=headers)
-list = r.json()
-tick_list = list["info"]
 
-exclude_key = 'MarketCodeName'  # 除外するキー
-exclude_value = 'その他'    # 除外する値
 
-# 特定のキーと値を含む辞書を除外する
-filtered_list = [d for d in tick_list if exclude_key not in d or d[exclude_key] != exclude_value]
+exclude_list = ['''
+DisclosedTime,
+NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock,
+NextYearForecastDistributionsPerUnit(REIT),
+DistributionsPerUnit(REIT),
+ForecastDistributionsPerUnit(REIT)
+ForecastNonConsolidatedNetSales2ndQuarter,
+ForecastNonConsolidatedOperatingProfit2ndQuarter,
+ForecastNonConsolidatedOrdinaryProfit2ndQuarter,
+ForecastNonConsolidatedProfit2ndQuarter,
+ForecastNonConsolidatedEarningsPerShare2ndQuarter,
+NextYearForecastNonConsolidatedNetSales2ndQuarter,
+NextYearForecastNonConsolidatedOperatingProfit2ndQuarter,
+NextYearForecastNonConsolidatedOrdinaryProfit2ndQuarter,
+NextYearForecastNonConsolidatedProfit2ndQuarter,
+NextYearForecastNonConsolidatedEarningsPerShare2ndQuarter,
+ForecastNonConsolidatedNetSales,
+ForecastNonConsolidatedOperatingProfit,
+ForecastNonConsolidatedOrdinaryProfit,
+ForecastNonConsolidatedProfit,
+ForecastNonConsolidatedEarningsPerShare,
+NextYearForecastNonConsolidatedNetSales,
+NextYearForecastNonConsolidatedOperatingProfit,
+NextYearForecastNonConsolidatedOrdinaryProfit,
+NextYearForecastNonConsolidatedProfit,
+NextYearForecastNonConsolidatedEarningsPerShare
+''']
 
-codes = [d["Code"] for d in filtered_list]
-
-for i_code in codes:
-    a = requests.get(f"https://api.jquants.com/v1/fins/statements?code={i_code}", headers=headers)
-    st = a.json()
-    fin_list = st["statements"]
-'''
 a = requests.get(f"https://api.jquants.com/v1/fins/statements?code={1301}", headers=headers)
 st = a.json()
 f_list = st["statements"]
 
+
 # 特定のキーを除外して新たに辞書を作成
 
-fin_list = [{k: v for k, v in d.items() if k not in ['NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock', 'NextYearForecastDistributionsPerUnit(REIT)', 'DistributionsPerUnit(REIT)', 'ForecastDistributionsPerUnit(REIT)']} for d in f_list]
-
+fin_list = [{k: v for k, v in d.items() if k not in [exclude_list]} for d in f_list]
+print(f_list)
 # リストのデータをテーブルに挿入
 for item in fin_list:
     columns = ', '.join(item.keys())
     placeholders = ', '.join(['%s'] * len(item))
-    insert_query = f"INSERT INTO code_db ({columns}) VALUES ({placeholders})"
+    insert_query = f"INSERT INTO code_db ({columns}) VALUES ({placeholders}) ON DUPLICATE KEY UPDATE DisclosureNumber=DisclosureNumber"
     cursor.execute(insert_query, tuple(item.values()))
 
 # コミットして変更を保存
