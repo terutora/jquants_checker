@@ -156,19 +156,32 @@ exclude_list = [
     'NextYearForecastNonConsolidatedEarningsPerShare'
 ]
 
-api = requests.get(f"https://api.jquants.com/v1/fins/statements?code={1332}", headers=headers)
-st = api.json()
-f_list = st["statements"]
+r = requests.get("https://api.jquants.com/v1/listed/info", headers=headers)
+list = r.json()
+tick_list = list["info"]
 
-# 特定のキーを除外して新たに辞書を作成
-fin_list = [exclude_keys(d, exclude_list) for d in f_list]
+exclude_key = 'MarketCodeName'  # 除外するキー
+exclude_value = 'その他'    # 除外する値
 
-# リストのデータをテーブルに挿入
-for item in fin_list:
-    columns = ', '.join(item.keys())
-    placeholders = ', '.join(['%s'] * len(item))
-    insert_query = f"INSERT INTO code_db ({columns}) VALUES ({placeholders}) ON DUPLICATE KEY UPDATE {', '.join([f'{k} = VALUES({k})' for k in item.keys()])}"
-    cursor.execute(insert_query, tuple(item.values()))
+# 特定のキーと値を含む辞書を除外する
+filtered_list = [d for d in tick_list if exclude_key not in d or d[exclude_key] != exclude_value]
 
-# コミットして変更を保存
-conn.commit()
+codes = [d["Code"] for d in filtered_list]
+
+for i_code in codes:
+    api = requests.get(f"https://api.jquants.com/v1/fins/statements?code={i_code}", headers=headers)
+    st = api.json()
+    f_list = st["statements"]
+
+    # 特定のキーを除外して新たに辞書を作成
+    fin_list = [exclude_keys(d, exclude_list) for d in f_list]
+
+    # リストのデータをテーブルに挿入
+    for item in fin_list:
+        columns = ', '.join(item.keys())
+        placeholders = ', '.join(['%s'] * len(item))
+        insert_query = f"INSERT INTO code_db ({columns}) VALUES ({placeholders}) ON DUPLICATE KEY UPDATE {', '.join([f'{k} = VALUES({k})' for k in item.keys()])}"
+        cursor.execute(insert_query, tuple(item.values()))
+
+    # コミットして変更を保存
+    conn.commit()
