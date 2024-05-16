@@ -1,6 +1,7 @@
-// 必要なモジュールをインポート
 const express = require('express');
 const mysql = require('mysql');
+const basicAuth = require('express-basic-auth');
+
 const app = express();
 const port = 3000;
 
@@ -8,8 +9,8 @@ const port = 3000;
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
-  database: 'mydatabase'
+  password: process.env.DATABASE_PASSWORD, // パスワードを環境変数から読み込む
+  database: 'info_db'
 });
 
 // データベースに接続
@@ -21,9 +22,19 @@ connection.connect(err => {
   console.log('データベースに接続されました');
 });
 
+// ベーシック認証を追加
+app.use(basicAuth({
+  users: { 'admin': 'supersecret' }, // ユーザー名とパスワードの組み合わせ
+  unauthorizedResponse: { error: '認証エラー' }
+}));
+
 // ユーザー情報を取得するAPIエンドポイント
 app.get('/users', (req, res) => {
-  connection.query('SELECT * FROM users', (err, results) => {
+  // LocalCodeが13010のレコードを取得するクエリ
+  const query = 'SELECT * FROM code_db WHERE LocalCode = ?';
+  const localCode = 13010;
+
+  connection.query(query, [localCode], (err, results) => {
     if (err) {
       res.status(500).json({ error: 'データ取得エラー' });
       return;
