@@ -3,7 +3,14 @@ const mysql = require('mysql');
 const basicAuth = require('express-basic-auth');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 4000;
+
+// CORSミドルウェアの設定
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // すべてのオリジンからアクセスを許可
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // MySQLデータベース接続設定
 const connection = mysql.createConnection({
@@ -22,10 +29,10 @@ connection.connect(err => {
   console.log('データベースに接続されました');
 });
 
-// ベーシック認証を追加
+// Basic認証の設定
 app.use(basicAuth({
-  users: { 'admin': 'supersecret' }, // ユーザー名とパスワードの組み合わせ
-  unauthorizedResponse: { error: '認証エラー' }
+  users: { admin: process.env.BASIC_AUTH_PASSWORD }, // ユーザー名とパスワードを環境変数から読み込む
+  challenge: true,
 }));
 
 // ユーザー情報を取得するAPIエンドポイント
@@ -45,5 +52,5 @@ app.get('/users', (req, res) => {
 
 // サーバーを起動
 app.listen(port, () => {
-  console.log(`サーバーは http://localhost:${port} で動作中です`);
+  console.log(`サーバーは http://localhost:${port}/users で動作中です`);
 });

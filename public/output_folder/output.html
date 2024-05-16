@@ -1,71 +1,35 @@
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>DisclosedDate</th>
-      <th>TypeOfDocument</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2022-02-04</td>
-      <td>3QFinancialStatements_Consolidated_JP</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2022-02-25</td>
-      <td>EarnForecastRevision</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2022-05-13</td>
-      <td>FYFinancialStatements_Consolidated_JP</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2022-04-25</td>
-      <td>DividendForecastRevision</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2022-08-05</td>
-      <td>1QFinancialStatements_Consolidated_JP</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>2022-11-04</td>
-      <td>2QFinancialStatements_Consolidated_JP</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>2023-02-03</td>
-      <td>3QFinancialStatements_Consolidated_JP</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>2023-03-27</td>
-      <td>EarnForecastRevision</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>2023-03-27</td>
-      <td>DividendForecastRevision</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>2023-05-12</td>
-      <td>FYFinancialStatements_Consolidated_JP</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>2023-08-04</td>
-      <td>1QFinancialStatements_Consolidated_JP</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>2023-11-06</td>
-      <td>2QFinancialStatements_Consolidated_JP</td>
-    </tr>
-  </tbody>
-</table>
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>ユーザー情報</h2>
+
+<button onclick="getUserData()">データを取得</button>
+
+<p id="userData"></p>
+
+<script>
+async function getUserData() {
+  const username = 'admin'; // Basic認証のユーザー名
+  const password = 'tachi877'; // Basic認証のパスワード
+  const credentials = `${username}:${password}`;
+  const base64Credentials = btoa(credentials);
+
+  const response = await fetch('http://localhost:4000/users', {
+    headers: {
+      'Authorization': `Basic ${base64Credentials}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTPエラー! 状態コード: ${response.status}`);
+  }
+
+  const data = await response.json();
+  document.getElementById('userData').innerHTML = JSON.stringify(data);
+}
+
+</script>
+
+</body>
+</html>
