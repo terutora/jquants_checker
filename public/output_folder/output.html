@@ -9,16 +9,10 @@
 <p id="userData"></p>
 
 <script>
-async function getUserData() {
-  const username = 'admin'; // Basic認証のユーザー名
-  const password = 'tachi877'; // Basic認証のパスワード
-  const credentials = `${username}:${password}`;
-  const base64Credentials = btoa(credentials);
-
-  const response = await fetch('http://localhost:4000/users', {
-    headers: {
-      'Authorization': `Basic ${base64Credentials}`
-    }
+  async function getUserData() {
+  const response = await fetch('http://localhost:4000/', {
+    method: 'GET',
+    credentials: 'omit'
   });
 
   if (!response.ok) {
@@ -28,8 +22,8 @@ async function getUserData() {
   const data = await response.json();
   document.getElementById('userData').innerHTML = JSON.stringify(data);
 }
-
-</script>
+  </script>
+  
 
 </body>
 </html>
