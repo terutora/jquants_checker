@@ -25,7 +25,7 @@ connection.connect(err => {
 // ユーザー情報を取得するAPIエンドポイント
 app.get('/', (req, res) => {
   // LocalCodeが13010のレコードを取得するクエリ
-  const query = 'SELECT LocalCode, DisclosureNumber FROM code_db WHERE LocalCode = ?';
+  const query = 'SELECT * FROM code_db WHERE LocalCode = ?';
   const filter = req.query.filter;
 
   connection.query(query, [filter], (err, results) => {
