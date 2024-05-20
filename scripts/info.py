@@ -1,20 +1,21 @@
 import json
-import pandas as pd
 import requests
 import os
-from openpyxl import Workbook
 import mysql.connector
+from dotenv import load_dotenv
 
-# 特定の環境変数を取得
-MY_EMAIL = os.environ.get('my_email')
-PASS = os.environ.get('password')
-PASSWORD = os.environ.get('pass')
+# .envファイルを読み込む
+load_dotenv()
 
+print("DB_HOST:", os.getenv('DB_HOST'))
+print("DB_USER:", os.getenv('DB_USER'))
+print("DB_PASSWORD:", os.getenv('DB_PASSWORD'))
+print("DB_NAME:", os.getenv('DB_NAME'))
 
 # リフレッシュトークンを取得
 resp = requests.post(
     "https://api.jquants.com/v1/token/auth_user",
-    data=json.dumps({"mailaddress": MY_EMAIL, "password": PASS})
+    data=json.dumps({"mailaddress": os.getenv('API_KEY_MY_EMAIL'), "password": os.getenv('API_KEY_MY_PASSWORD')})
 )
 REFRESH_TOKEN = resp.json()["refreshToken"]
 
@@ -32,10 +33,11 @@ list = r.json()
 tick_list = list["info"]
 
 config = {
-    'host': 'localhost',
-    'user': 'root',
-    "password": PASSWORD,
-    'database': 'info_db'
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
+    'database': os.getenv('DB_NAME'),
+    'charset': 'utf8mb4'
 }
 
 # MySQLに接続
@@ -44,9 +46,9 @@ cursor = conn.cursor()
 
 # テーブル作成のクエリ
 create_table_query = """
-CREATE TABLE IF NOT EXISTS my_table (
+CREATE TABLE IF NOT EXISTS basic_info (
     Date VARCHAR(255),
-    Code VARCHAR(255),
+    Code VARCHAR(255) UNIQUE,
     CompanyName VARCHAR(255),
     CompanyNameEnglish VARCHAR(255),
     Sector17Code VARCHAR(255),
@@ -62,10 +64,15 @@ cursor.execute(create_table_query)
 
 # リストのデータをテーブルに挿入
 for item in tick_list:
-    columns = ', '.join(item.keys())
-    placeholders = ', '.join(['%s'] * len(item))
-    insert_query = f"INSERT INTO besic_info ({columns}) VALUES ({placeholders})"
-    cursor.execute(insert_query, tuple(item.values()))
-
+    # データが既に存在するか確認
+    cursor.execute("SELECT COUNT(*) FROM basic_info WHERE Code = %s", (item['Code'],))
+    count = cursor.fetchone()[0]
+    
+    if count == 0:
+        # データが存在しない場合のみ挿入
+        columns = ', '.join(item.keys())
+        placeholders = ', '.join(['%s'] * len(item))
+        insert_query = f"INSERT INTO basic_info ({columns}) VALUES ({placeholders})"
+        cursor.execute(insert_query, tuple(item.values()))
 # コミットして変更を保存
 conn.commit()

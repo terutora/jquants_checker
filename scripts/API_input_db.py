@@ -2,17 +2,16 @@ import json
 import requests
 import os
 import mysql.connector
+from dotenv import load_dotenv
 
-# 特定の環境変数を取得
-MY_EMAIL = os.environ.get('my_email')
-PASS = os.environ.get('password')
-PASSWORD = os.environ.get('pass')
+# .envファイルを読み込む
+load_dotenv()
 
 config = {
-    'host': 'localhost',
-    'user': 'root',
-    "password": PASSWORD,
-    'database': 'info_db'
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
+    'database': os.getenv('DB_NAME')
 }
 
 conn = mysql.connector.connect(**config)
@@ -110,7 +109,7 @@ cursor.execute(create_table_query)
 # リフレッシュトークンを取得
 resp = requests.post(
     "https://api.jquants.com/v1/token/auth_user",
-    data=json.dumps({"mailaddress": MY_EMAIL, "password": PASS})
+    data=json.dumps({"mailaddress": f"{os.getenv('API_KEY_MY_EMAIL')}", "password": f"{os.getenv('API_KEY_MY_PASSWORD')}"})
 )
 REFRESH_TOKEN = resp.json()["refreshToken"]
 
