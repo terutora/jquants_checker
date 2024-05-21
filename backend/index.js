@@ -1,11 +1,14 @@
+// 必要なモジュールをインポート
 const express = require('express');
 const app = express();
-const port = 3000;
+const userRoutes = require('./app/routes/apiRoutes');
+const config = require('./config/config');
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// ミドルウェアの設定やルーティングの設定
+app.use('/api', userRoutes);
 
-app.listen(port, () => {
-  console.log(`Backend app listening at http://localhost:${port}`);
+// サーバーを起動
+const PORT = config.port || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

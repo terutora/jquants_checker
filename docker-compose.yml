@@ -26,17 +26,14 @@ services:
       - ./backend:/app
 
   db:
-    image: mysql:8.0.37
+    build: ./mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_CHARSET: utf8mb4
-      MYSQL_COLLATION: utf8mb4_unicode_ci
     ports:
       - "13306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./my.cnf:/etc/my.cnf
 
   scripts:
     build: ./scripts
