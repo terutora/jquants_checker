@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const UserController = require('../controllers/UserController');
-const StockController = require('../controllers/StockController');
+const UserController = require('../controllers/UserController.js');
+const StockController = require('../controllers/StockController.js');
 
 // ユーザー関連のルート
 router.get('/users', UserController.getAllUsers);
@@ -11,4 +11,4 @@ router.post('/users', UserController.createUser);
 router.get('/stocks', StockController.getAllStocks);
 router.post('/stocks', StockController.createStock);
 
-module.exports = router;
+exports = {router};

@@ -1,16 +1,15 @@
 const express = require('express');
-const app = express();
 const mysql = require('mysql');
-const cors = require('cors')
-const port = process.env.PORT || 4000;
+const router = express.Router();
 
-app.use(cors())
+require('dotenv').config();
+
 // MySQLデータベース接続設定
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
   password: process.env.DATABASE_PASSWORD, // パスワードを環境変数から読み込む
-  database: 'info_db'
+  database: process.env.DB_NAME
 });
 
 // データベースに接続
@@ -23,21 +22,17 @@ connection.connect(err => {
 });
 
 // ユーザー情報を取得するAPIエンドポイント
-app.get('/', (req, res) => {
-  // LocalCodeが13010のレコードを取得するクエリ
+router.get('/stocks', (req, res) => {
   const query = 'SELECT * FROM code_db WHERE LocalCode = ?';
   const filter = req.query.filter;
 
-  connection.query(query, [filter], (err, results) => {
+  connection.query(query, [filter], (err, stocks) => {
     if (err) {
       res.status(500).json({ error: 'データ取得エラー' });
       return;
     }
-    res.json(results);
+    res.json(stocks);
   });
 });
 
-// サーバーを起動
-app.listen(port, () => {
-  console.log(`サーバーは http://localhost:${port}/ で動作中です`);
-});
+module.exports = router;

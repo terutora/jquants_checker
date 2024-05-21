@@ -7,11 +7,6 @@ from dotenv import load_dotenv
 # .envファイルを読み込む
 load_dotenv()
 
-print("DB_HOST:", os.getenv('DB_HOST'))
-print("DB_USER:", os.getenv('DB_USER'))
-print("DB_PASSWORD:", os.getenv('DB_PASSWORD'))
-print("DB_NAME:", os.getenv('DB_NAME'))
-
 # リフレッシュトークンを取得
 resp = requests.post(
     "https://api.jquants.com/v1/token/auth_user",
@@ -28,6 +23,7 @@ resp = requests.post(
 ID_TOKEN = resp.json()["idToken"]
 
 headers = {'Authorization': 'Bearer {}'.format(ID_TOKEN)}
+
 r = requests.get("https://api.jquants.com/v1/listed/info", headers=headers)
 list = r.json()
 tick_list = list["info"]

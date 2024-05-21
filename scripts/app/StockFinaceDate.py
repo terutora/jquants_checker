@@ -7,6 +7,28 @@ from dotenv import load_dotenv
 # .envファイルを読み込む
 load_dotenv()
 
+# リフレッシュトークンを取得
+resp = requests.post(
+    "https://api.jquants.com/v1/token/auth_user",
+    data=json.dumps({"mailaddress": os.getenv('API_KEY_MY_EMAIL'), "password": os.getenv('API_KEY_MY_PASSWORD')})
+)
+
+REFRESH_TOKEN = resp.json()["refreshToken"]
+
+# IDトークンを取得
+resp = requests.post(
+    "https://api.jquants.com/v1/token/auth_refresh",
+    params={"refreshtoken": REFRESH_TOKEN}
+)
+
+ID_TOKEN = resp.json()["idToken"]
+
+headers = {'Authorization': 'Bearer {}'.format(ID_TOKEN)}
+
+r = requests.get("https://api.jquants.com/v1/listed/info", headers=headers)
+list = r.json()
+tick_list = list["info"]
+
 config = {
     'user': os.getenv('DB_USER'),
     'password': os.getenv('DB_PASSWORD'),
@@ -105,24 +127,6 @@ CREATE TABLE IF NOT EXISTS code_db (
 """
 cursor.execute(create_table_query)
 
-
-# リフレッシュトークンを取得
-resp = requests.post(
-    "https://api.jquants.com/v1/token/auth_user",
-    data=json.dumps({"mailaddress": f"{os.getenv('API_KEY_MY_EMAIL')}", "password": f"{os.getenv('API_KEY_MY_PASSWORD')}"})
-)
-REFRESH_TOKEN = resp.json()["refreshToken"]
-
-# IDトークンを取得
-resp = requests.post(
-    "https://api.jquants.com/v1/token/auth_refresh",
-    params={"refreshtoken": REFRESH_TOKEN}
-)
-
-ID_TOKEN = resp.json()["idToken"]
-
-headers = {'Authorization': 'Bearer {}'.format(ID_TOKEN)}
-
 # 特定のキーを除外する関数
 def exclude_keys(d, exclude_list):
     return {key: value for key, value in d.items() if key not in exclude_list}
@@ -155,17 +159,14 @@ exclude_list = [
     'NextYearForecastNonConsolidatedEarningsPerShare'
 ]
 
-r = requests.get("https://api.jquants.com/v1/listed/info", headers=headers)
-list = r.json()
-tick_list = list["info"]
-
 exclude_key = 'MarketCodeName'  # 除外するキー
 exclude_value = 'その他'    # 除外する値
 
 # 特定のキーと値を含む辞書を除外する
 filtered_list = [d for d in tick_list if exclude_key not in d or d[exclude_key] != exclude_value]
 
-codes = [d["Code"] for d in filtered_list]
+# リスト内包表記でコードを収集し、集合を使用して重複を排除
+codes = (set(d["Code"] for d in filtered_list))
 
 for i_code in codes:
     api = requests.get(f"https://api.jquants.com/v1/fins/statements?code={i_code}", headers=headers)
