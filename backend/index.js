@@ -1,10 +1,8 @@
 // 必要なモジュールをインポート
 import express from 'express';
+import { config } from './config/config.mjs';
 import { router as userRoutes } from './app/routes/apiRoutes.mjs';
 
-// const app = express(); この行は移動してください
-
-// expressアプリケーションのインスタンスを生成
 const app = express();
 
 // ミドルウェアの設定やルーティングの設定
