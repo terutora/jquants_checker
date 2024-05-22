@@ -1,6 +1,6 @@
-import express from 'express';
-import { UserController } from '../controllers/UserController.mjs';
-import { StockController } from '../controllers/StockController.mjs';
+const express = require('express');
+const UserController = require('../controllers/UserController.js');
+const StockController = require('../controllers/StockController.js');
 
 const router = express.Router();
 
@@ -12,4 +12,4 @@ router.post('/users', UserController.createUser);
 router.get('/stocks', StockController.getAllStocks);
 router.post('/stocks', StockController.createStock);
 
-export { router };
+module.exports = router;

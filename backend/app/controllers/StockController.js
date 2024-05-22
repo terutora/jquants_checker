@@ -1,13 +1,13 @@
-import express from 'express';
-import mysql from 'mysql';
-import dotenv from 'dotenv';
+const express = require('express');
+const mysql = require('mysql2');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DATABASE_PASSWORD,
+  password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME
 });
 
@@ -23,7 +23,7 @@ connection.connect(err => {
 const router = express.Router();
 
 // 株式関連のコントローラー
-export class StockController {
+class StockController {
   // 株式情報を取得するメソッド
   static getAllStocks(req, res) {
     // データベースから株式情報を取得
@@ -58,5 +58,4 @@ export class StockController {
   }
 }
 
-// ルーターをエクスポート
-export default router;
+module.exports = StockController;

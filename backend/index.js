@@ -1,7 +1,6 @@
-// 必要なモジュールをインポート
-import express from 'express';
-import { config } from './config/config.mjs';
-import { router as userRoutes } from './app/routes/apiRoutes.mjs';
+const express = require('express');
+const config = require('./config/config.js');
+const userRoutes = require('./app/routes/apiRoutes.js');
 
 const app = express();
 
@@ -9,7 +8,7 @@ const app = express();
 app.use('/api', userRoutes);
 
 // サーバーを起動
-const PORT = config.port || 3000;
+const PORT = config.port || 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

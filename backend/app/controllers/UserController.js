@@ -1,7 +1,7 @@
 // UserController.mjs
 
 // クラスを使う場合
-export class UserController {
+class UserController {
   static getAllUsers(req, res) {
     // 実際の処理
     res.send('All users');
@@ -12,3 +12,5 @@ export class UserController {
     res.send('User created');
   }
 }
+
+module.exports = UserController;

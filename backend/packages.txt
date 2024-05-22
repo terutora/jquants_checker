@@ -1,7 +1,0 @@
-express
-dotenv
-mysql
-nodemon
-chai-http
-chai
-mocha
