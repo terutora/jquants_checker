@@ -1,47 +1,46 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div id="app">
+    <HeaderComponent />
+    <div class="container">
+      <NavigationComponent />
+      <main>
+        <ArticleComponent
+          v-for="article in articles"
+          :key="article.id"
+          :article="article"
+        />
+      </main>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <footer>
+      IR Finder
+    </footer>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script>
+import HeaderComponent from './components/HeaderComponent.vue';
+import NavigationComponent from './components/NavigationComponent.vue';
+import ArticleComponent from './components/ArticleComponent.vue';
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+export default {
+  name: 'App',
+  components: {
+    HeaderComponent,
+    NavigationComponent,
+    ArticleComponent,
+  },
+  data() {
+    return {
+      articles: [
+        { id: '2024', year: '2024年', text: '成長企業といえば', img: 'copy1.jpg' },
+        { id: '2023', year: '2023年', text: 'おすすめの半導体銘柄', img: 'copy2.jpg' },
+        { id: '2022', year: '2022年', text: '今年はやりそうな業種', img: 'copy3.jpg' },
+      ],
+    };
+  },
+};
+</script>
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
+<style>
+@import './assets/css/main.css';
 </style>

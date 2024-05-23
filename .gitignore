@@ -14,10 +14,6 @@ yarn-error.log
 pnpm-debug.log
 lerna-debug.log
 
-# ビルドディレクトリ
-frontend/dist/
-frontend/build/
-
 # IDEとエディタの設定
 .vscode/
 .idea/
