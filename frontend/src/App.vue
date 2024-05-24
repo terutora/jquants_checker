@@ -32,9 +32,9 @@ export default {
   data() {
     return {
       articles: [
-        { id: '2024', year: '2024年', text: '成長企業といえば', img: 'copy1.jpg' },
-        { id: '2023', year: '2023年', text: 'おすすめの半導体銘柄', img: 'copy2.jpg' },
-        { id: '2022', year: '2022年', text: '今年はやりそうな業種', img: 'copy3.jpg' },
+        { id: '2024', year: '2024年', text: '成長企業といえば', img: 'src/assets/images/copy1.jpg' },
+        { id: '2023', year: '2023年', text: 'おすすめの半導体銘柄', img: 'src/assets/images/copy2.jpg' },
+        { id: '2022', year: '2022年', text: '今年はやりそうな業種', img: 'src/assets/images/copy3.jpg' },
       ],
     };
   },
