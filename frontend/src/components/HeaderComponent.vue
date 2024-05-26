@@ -5,7 +5,7 @@
         <img src="@/assets/images/アセット 1.png" alt="見出し"/>
       </a>
       <form action="/search" method="GET">
-        <input type="text" id="searchInput" placeholder="企業コードを入力">
+        <input id="searchInput" type="text" placeholder="企業コードを入力">
         <button type="submit">検索</button>
       </form>
     </div>
@@ -13,8 +13,13 @@
 </template>
 
 <script>
+import search from '@/assets/js/search.js';
+
 export default {
   name: 'HeaderComponent',
+  mounted() {
+    search();
+  },
 };
 </script>
 
