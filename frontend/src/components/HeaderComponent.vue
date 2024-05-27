@@ -1,28 +1,42 @@
-<template>
-  <header>
-    <div class="logo-search">
-      <a href="#">
-        <img src="@/assets/images/アセット 1.png" alt="見出し"/>
-      </a>
-      <form action="/search" method="GET">
-        <input id="searchInput" type="text" placeholder="企業コードを入力">
-        <button type="submit">検索</button>
-      </form>
-    </div>
-  </header>
-</template>
+// src/components/HeaderComponent.vue
 
 <script>
-import search from '@/assets/js/search.js';
+import axios from 'axios';
 
 export default {
-  name: 'HeaderComponent',
-  mounted() {
-    search();
+  data() {
+    return {
+      keyword: ''
+    };
   },
-};
+  methods: {
+    async handleSubmit() {
+      try {
+        console.log('Keyword:', this.keyword);  // デバッグ用
+        const response = await axios.get('/api/data', {
+          params: {
+            filter: this.keyword
+          }
+        });
+        console.log('Response:', response.data);  // デバッグ用
+        const data = response.data;
+        if (data) {
+          window.location.href = `${this.keyword}.html`;
+        } else {
+          alert('該当するページが見つかりません。');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        alert('エラーが発生しました。');
+      }
+    }
+  }
+}
 </script>
 
-<style scoped>
-/* 必要に応じてスタイルを追加 */
-</style>
+<template>
+  <div>
+    <input v-model="keyword" placeholder="キーワードを入力">
+    <button @click="handleSubmit">送信</button>
+  </div>
+</template>
