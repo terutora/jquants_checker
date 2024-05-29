@@ -1,6 +1,3 @@
-// config.js
-const config = {
-    port: 4000,
-    // その他の設定
-  };
-  
+module.exports = {
+  port: 4000
+};
