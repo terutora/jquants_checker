@@ -1,12 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router';  // Vue Routerの関数をインポート
-import MessageComponent from '@/components/MessageComponent.vue';  // 表示するメッセージを持つコンポーネントをインポート
+import { createRouter, createWebHistory } from 'vue-router'; 
+import App from '@/App.vue';
+import MessageComponent from '@/components/MessageComponent.vue';  
+import NotFound from '@/components/NotFound.vue';
+import ErrorPage from '@/components/ErrorPage.vue'; // Errorコンポーネントの名前を変更
 
 const routes = [
-  {
-    path: '/message',  // 新しいページのパスを指定
-    name: 'Message',
-    component: MessageComponent  // 表示するメッセージを持つコンポーネントを指定
-  }
+    { path: '/', name: 'App', component: App},
+    { path: '/message', name: 'MessagePage', component: MessageComponent},
+    { path: '/notfound', name: 'NotFound', component: NotFound}, 
+    { path: '/error', name: 'ErrorPage', component: ErrorPage} 
 ];
 
 const router = createRouter({

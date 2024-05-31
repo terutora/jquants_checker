@@ -12,7 +12,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      keyword: ''
+      keyword: '',
+      message: ''
     };
   },
   methods: {
@@ -27,14 +28,17 @@ export default {
         console.log('レスポンス:', response.data);
         const data = response.data;
         if (data.message) {
-          // メッセージを新しいページに表示するために遷移
+          this.message = data.message;  // デバッグ用に追加
+          console.log('メッセージルートに遷移します');
           this.$router.push({ name: 'Message', query: { message: data.message } });
         } else {
-          this.$router.push({ name: 'NotFound' }); // メッセージがない場合は404ページに遷移
+          console.log('NotFoundルートに遷移します');
+          this.$router.push({ name: 'NotFound' });
         }
       } catch (error) {
         console.error('データの取得エラー:', error);
-        this.$router.push({ name: 'Error' }); // エラーが発生した場合はエラーページに遷移
+        console.log('ErrorPageルートに遷移します');
+        this.$router.push({ name: 'ErrorPage' });
       }
     }
   }

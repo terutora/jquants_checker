@@ -2,13 +2,13 @@ import './assets/css/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router';
+import router from './router/index.js'
 
-createApp(App).mount('#app')
+// アプリケーションインスタンスを作成
+const app = createApp(App)
 
-createApp.config.productionTip = false;
+// ルーターを統合
+app.use(router)
 
-new createApp({
-  router,  // Vue RouterをVueインスタンスに統合
-  render: h => h(App),
-}).$mount('#app');
+// アプリケーションをマウント
+app.mount('#app')

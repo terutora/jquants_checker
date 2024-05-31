@@ -1,13 +1,12 @@
 <template>
     <div>
-      <h1>メッセージ</h1>
-      <p>{{ $route.query.message }}</p>
+      <h1>404 - ページが見つかりません</h1>
     </div>
   </template>
   
   <script>
   export default {
-    name: 'MessagePage'
+    name: 'NotFound'
   }
   </script>
   
