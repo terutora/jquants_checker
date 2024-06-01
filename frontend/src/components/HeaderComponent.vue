@@ -1,46 +1,64 @@
 <template>
-  <div>
-    <input v-model="keyword" placeholder="キーワードを入力">
-    <button @click="handleSubmit">送信</button>
-    <p>{{ message }}</p>
-  </div>
+  <header>
+    <div class="logo-search">
+      <a href="#">
+        <img :src="logo" alt="見出し"/>
+      </a>
+      <form @submit.prevent="handleSubmit">
+        <input id="searchInput" v-model="keyword" type="text" placeholder="企業コードを入力">
+        <button type="submit">検索</button>
+      </form>
+    </div>
+  </header>
 </template>
 
 <script>
 import axios from 'axios';
+import logoImage from '@/assets/images/アセット 1.png';
 
 export default {
+  name: 'HeaderComponent',
   data() {
     return {
       keyword: '',
-      message: ''
+      message: '',
+      errorMessage: 'コードが見つかりませんでした',
+      logo: logoImage
     };
   },
   methods: {
     async handleSubmit() {
       try {
         console.log('キーワード:', this.keyword);
+        const modifiedKeyword = `${this.keyword}0`
+        console.log('修正後のキーワード:', modifiedKeyword);
         const response = await axios.get('http://localhost:4000/api/stocks', {
           params: {
-            filter: this.keyword
+            filter: modifiedKeyword
           }
         });
         console.log('レスポンス:', response.data);
+        
         const data = response.data;
-        if (data.message) {
-          this.message = data.message;  // デバッグ用に追加
+        if (data && Object.keys(data).length > 0) {
+          this.message = data.message;
           console.log('メッセージルートに遷移します');
-          this.$router.push({ name: 'Message', query: { message: data.message } });
+          // Optional: ここで他の処理を行う（例：ページ遷移、データ表示など）
+          this.$router.push({ name: 'MessagePage', query: { data: JSON.stringify(data) } });
         } else {
-          console.log('NotFoundルートに遷移します');
-          this.$router.push({ name: 'NotFound' });
+          this.message = '';  // 通常メッセージをクリア
+          console.log('コードが見つかりませんでした');
+          alert(this.errorMessage);  // アラートでエラーメッセージを表示
         }
       } catch (error) {
         console.error('データの取得エラー:', error);
+        this.errorMessage = 'エラーが発生しました';
         console.log('ErrorPageルートに遷移します');
-        this.$router.push({ name: 'ErrorPage' });
+        // Optional: エラーページに遷移したくない場合は以下の行をコメントアウトまたは削除
+        // this.$router.push({ name: 'ErrorPage' });
+        alert(this.errorMessage);  // アラートでエラーメッセージを表示
       }
     }
   }
-}
+};
 </script>

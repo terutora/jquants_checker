@@ -1,8 +1,6 @@
-import './assets/css/main.css'
-
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router/index.js'
+import router from './router'
 
 // アプリケーションインスタンスを作成
 const app = createApp(App)
