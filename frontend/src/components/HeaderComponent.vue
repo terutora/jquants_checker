@@ -1,9 +1,9 @@
 <template>
   <header>
     <div class="logo-search">
-      <a href="#">
+      <router-link to="/">
         <img :src="logo" alt="見出し"/>
-      </a>
+      </router-link>
       <form @submit.prevent="handleSubmit">
         <input id="searchInput" v-model="keyword" type="text" placeholder="企業コードを入力">
         <button type="submit">検索</button>
