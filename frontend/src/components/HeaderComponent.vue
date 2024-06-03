@@ -30,7 +30,7 @@ export default {
     async handleSubmit() {
       try {
         console.log('キーワード:', this.keyword);
-        const modifiedKeyword = `${this.keyword}0`
+        const modifiedKeyword = `${this.keyword}0`;
         console.log('修正後のキーワード:', modifiedKeyword);
         const response = await axios.get('http://localhost:4000/api/stocks', {
           params: {
@@ -38,13 +38,12 @@ export default {
           }
         });
         console.log('レスポンス:', response.data);
-        
+
         const data = response.data;
         if (data && Object.keys(data).length > 0) {
           this.message = data.message;
           console.log('メッセージルートに遷移します');
-          // Optional: ここで他の処理を行う（例：ページ遷移、データ表示など）
-          this.$router.push({ name: 'MessagePage', query: { data: JSON.stringify(data) } });
+          this.$router.push({ name: 'DataHandler', query: { data: JSON.stringify(data), code: this.keyword } });
         } else {
           this.message = '';  // 通常メッセージをクリア
           console.log('コードが見つかりませんでした');
@@ -53,9 +52,6 @@ export default {
       } catch (error) {
         console.error('データの取得エラー:', error);
         this.errorMessage = 'エラーが発生しました';
-        console.log('ErrorPageルートに遷移します');
-        // Optional: エラーページに遷移したくない場合は以下の行をコメントアウトまたは削除
-        // this.$router.push({ name: 'ErrorPage' });
         alert(this.errorMessage);  // アラートでエラーメッセージを表示
       }
     }
