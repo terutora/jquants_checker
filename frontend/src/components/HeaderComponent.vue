@@ -26,6 +26,13 @@ export default {
       logo: logoImage
     };
   },
+  watch: {
+    $route(from){
+      if(from.name === 'DataHandler'){
+        location.reload();
+      }
+    }
+  },
   methods: {
     async handleSubmit() {
       try {
@@ -55,6 +62,6 @@ export default {
         alert(this.errorMessage);  // アラートでエラーメッセージを表示
       }
     }
-  }
+  },
 };
 </script>

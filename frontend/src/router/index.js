@@ -11,7 +11,7 @@ const routes = [
     { path: '/notfound', name: 'NotFound', component: NotFound}, 
     { path: '/error', name: 'ErrorPage', component: ErrorPage},
     { path: '/datahandler', name: 'DataHandler', component: DataHandler},
-    { path: '/:pathMatch(.*)*', redirect: '/'}
+    { path: '/:pathMatch(.*)*', redirect: '/notfound'}
 ];
 
 const router = createRouter({
