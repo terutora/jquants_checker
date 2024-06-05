@@ -1,12 +1,11 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import { createPinia } from 'pinia';
 
-// アプリケーションインスタンスを作成
-const app = createApp(App)
+const app = createApp(App);
 
-// ルーターを統合
-app.use(router)
+app.use(router);
+app.use(createPinia());
 
-// アプリケーションをマウント
-app.mount('#app')
+app.mount('#app');
