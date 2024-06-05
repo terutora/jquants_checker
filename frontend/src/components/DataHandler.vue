@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- データの処理は行わず、propsで受け取ったデータをそのままMessagePageに渡す -->
-    <MessagePage :code="code" :tableData="tableData" />
+    <MessagePage :code="code" :table-data="tableData" />
   </div>
 </template>
 
@@ -13,6 +13,17 @@ export default {
   components: {
     MessagePage
   },
-  props: ['code', 'tableData']
+  data() {
+    return {
+      code: '',
+      tableData: null
+    };
+  },
+  created() {
+    // セッションストレージからデータを取得
+    const data = JSON.parse(sessionStorage.getItem('data'));
+    this.code = sessionStorage.getItem('code');
+    this.tableData = data;
+  }
 };
 </script>

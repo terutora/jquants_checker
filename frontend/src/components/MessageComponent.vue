@@ -68,18 +68,14 @@ export default {
   components: {
     HeaderComponent
   },
-  data() {
-    return {
-      tableData: null,
-      code: ''
-    };
-  },
-  created() {
-    if (this.$route.query.data) {
-      this.tableData = JSON.parse(this.$route.query.data);
-    }
-    if (this.$route.query.code) {
-      this.code = this.$route.query.code;
+  props: {
+    code: {
+      type: String,
+      required: true
+    },
+    tableData: {
+      type: Array,
+      required: true
     }
   },
   mounted() {

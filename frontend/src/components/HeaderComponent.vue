@@ -26,13 +26,6 @@ export default {
       logo: logoImage
     };
   },
-  watch: {
-    $route(from){
-      if(from.name === 'DataHandler'){
-        location.reload();
-      }
-    }
-  },
   methods: {
     async handleSubmit() {
       try {
@@ -50,7 +43,10 @@ export default {
         if (data && Object.keys(data).length > 0) {
           this.message = data.message;
           console.log('メッセージルートに遷移します');
-          this.$router.push({ name: 'DataHandler', query: { data: JSON.stringify(data), code: this.keyword } });
+          // セッションストレージにデータを保存
+          sessionStorage.setItem('data', JSON.stringify(data));
+          sessionStorage.setItem('code', this.keyword);
+          this.$router.push({ name: 'DataHandler' });
         } else {
           this.message = '';  // 通常メッセージをクリア
           console.log('コードが見つかりませんでした');
@@ -62,6 +58,6 @@ export default {
         alert(this.errorMessage);  // アラートでエラーメッセージを表示
       }
     }
-  },
+  }
 };
 </script>
