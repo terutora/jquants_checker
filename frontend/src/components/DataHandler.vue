@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MessagePage :code="code" :tableData="tableData" />
+    <MessagePage :code="code" :table-data="tableData" />
   </div>
 </template>
 
