@@ -1,11 +1,9 @@
-const express = require('express');
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
 
 // 環境変数を読み込む
 dotenv.config();
 
-// Expressアプリケーションを作成
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -20,9 +18,6 @@ connection.connect(err => {
   }
   console.log('データベースに接続されました');
 });
-
-// ルーターを作成
-const router = express.Router();
 
 // 株式関連のコントローラー
 class StockController {
@@ -42,7 +37,7 @@ class StockController {
     });
   }
 
-  static getAllStocks(req, res) {
+  static getBasicInfoStocks(req, res) {
     // データベースから株式情報を取得
     const query = 'SELECT * FROM basic_info WHERE Code = ?';
     const filter = req.query.filter;
