@@ -42,6 +42,21 @@ class StockController {
     });
   }
 
+  static getAllStocks(req, res) {
+    // データベースから株式情報を取得
+    const query = 'SELECT * FROM basic_info WHERE Code = ?';
+    const filter = req.query.filter;
+
+    connection.query(query, [filter], (err, stocks) => {
+      if (err) {
+        console.error('データ取得エラー:', err);
+        res.status(500).json({ error: 'データ取得エラー' });
+        return;
+      }
+      res.json(stocks);
+    });
+  }
+
   // 株式情報を作成するメソッド
   static createStock(req, res) {
     // リクエストボディから株式情報を取得
