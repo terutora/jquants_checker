@@ -6,8 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "test": "mocha 'tests/**/*.test.js'",
-    "build": "vite build",
-    "heroku-postbuild": "npm install && npm install vite --save-dev --prefix frontend && npm run build --prefix frontend"
+    "build": "echo 'No build steps needed for backend'",
+    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
   },
   "dependencies": {
     "chai-http": "^4.4.0",
