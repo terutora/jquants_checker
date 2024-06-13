@@ -4,7 +4,7 @@
   "description": "Backend for my web app",
   "main": "index.js",
   "scripts": {
-    "heroku-postbuild": "npm install vite@latest && npm run build frontend"
+    "heroku-postbuild": "cd frontend && npm install vite@latest && npm run build"
   },
   "dependencies": {
     "chai-http": "^4.4.0",
