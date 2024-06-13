@@ -4,8 +4,8 @@
   "description": "Backend for my web app",
   "main": "index.js",
   "scripts": {
-    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
-  },
+    "heroku-postbuild": "npm install vite@latest && npm run build"
+    },
   "dependencies": {
     "chai-http": "^4.4.0",
     "cors": "^2.8.5",
