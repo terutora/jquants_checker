@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="logo-search">
-      <router-link to="/jquants_checker/">
+      <router-link to="/">
         <img :src="logo" alt="見出し"/>
       </router-link>
       <form @submit.prevent="handleSubmit">

@@ -6,11 +6,11 @@ import ErrorPage from '@/components/ErrorPage.vue';
 import DataHandler from '@/components/DataHandler.vue';
 
 const routes = [
-    { path: '/jquants_checker/', name: 'HomePage', component: Home},
-    { path: '/jquants_checker/message', name: 'MessagePage', component: MessageComponent},
-    { path: '/jquants_checker/notfound', name: 'NotFound', component: NotFound}, 
-    { path: '/jquants_checker/error', name: 'ErrorPage', component: ErrorPage},
-    { path: '/jquants_checker/datahandler', name: 'DataHandler', component: DataHandler},
+    { path: '/', name: 'HomePage', component: Home},
+    { path: '/message', name: 'MessagePage', component: MessageComponent},
+    { path: '/notfound', name: 'NotFound', component: NotFound}, 
+    { path: '/error', name: 'ErrorPage', component: ErrorPage},
+    { path: '/datahandler', name: 'DataHandler', component: DataHandler},
     { path: '/:pathMatch(.*)*', redirect: '/notfound'} 
 ];
 
