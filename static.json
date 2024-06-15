@@ -1,7 +1,0 @@
-{
-    "root": "my-app/build/",
-    "routes": {
-      "/**": "index.html"
-    }
-  }
-  
