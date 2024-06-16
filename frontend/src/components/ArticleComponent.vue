@@ -2,7 +2,7 @@
   <div :id="article.id">
     <h2>{{ article.year }}</h2>
     <p>{{ article.text }}</p>
-    <img :src="`src/assets/images/${article.img}`"/>
+    <img :src="`@/assets/images/${article.img}`"/>
   </div>
 </template>
 

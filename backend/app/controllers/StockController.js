@@ -24,10 +24,10 @@ class StockController {
   // 株式情報を取得するメソッド
   static getAllStocks(req, res) {
     // データベースから株式情報を取得
-    const query = 'SELECT * FROM code_db WHERE LocalCode = 13010';
+    const query = 'SELECT * FROM code_db WHERE LocalCode = ?';
     const filter = req.query.filter;
 
-    connection.query(query, (err, stocks) => {
+    connection.query(query, filter, (err, stocks) => {
       if (err) {
         console.error('データ取得エラー:', err);
         res.status(500).json({ error: 'データ取得エラー' });
