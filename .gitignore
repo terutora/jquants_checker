@@ -6,6 +6,8 @@ node_modules/
 # 環境変数ファイル
 .env
 
+certs/
+
 # ログファイル
 logs
 *.log
