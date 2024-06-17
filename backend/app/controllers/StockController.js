@@ -1,5 +1,6 @@
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
+const fs = require('fs');
 
 // 環境変数を読み込む
 dotenv.config();
