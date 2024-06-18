@@ -1,12 +1,7 @@
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
-const fs = require('fs');
-
 // 環境変数を読み込む
 dotenv.config();
-
-// SSL証明書を読み込む
-const sslCert = fs.readFileSync(process.env.SSL_CERT_PATH);
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -14,7 +9,7 @@ const connection = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   ssl: {
-    ca: sslCert
+    ca: process.env.SSL_CERT_PATH
   }
 });
 
