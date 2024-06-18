@@ -280,7 +280,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node backend/index.js",
+    "start": "nodemon backend/index.js",
     "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
   "keywords": [],
