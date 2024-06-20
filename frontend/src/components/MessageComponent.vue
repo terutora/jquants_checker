@@ -8,6 +8,7 @@
         <table v-if="tableData">
           <thead>
             <tr>
+              <th>企業名</th>
               <th>決算期</th>
               <th>売上高</th>
               <th>営業利益</th>

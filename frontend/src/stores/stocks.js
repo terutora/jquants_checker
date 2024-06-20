@@ -13,7 +13,8 @@ export const useStockStore = defineStore('stocks', {
         const modifiedKeyword = `${keyword}0`;
         const response = await axios.get('http://localhost:4000/api/stocks', {
           params: {
-            filter: modifiedKeyword
+            filter: modifiedKeyword,
+            name: modifiedKeyword
           }
         });
         const data = response.data;

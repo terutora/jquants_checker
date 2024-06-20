@@ -10,6 +10,7 @@ router.post('/users', UserController.createUser);
 
 // 株式関連のルート
 router.get('/stocks', StockController.getAllStocks);
+router.get('/stocks', StockController.getAllInfo);
 router.post('/stocks', StockController.createStock);
 
 module.exports = router;

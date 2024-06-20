@@ -28,7 +28,7 @@ class StockController {
     // データベースから株式情報を取得
     const query = 'SELECT * FROM code_db WHERE LocalCode = ?';
     const filter = req.query.filter;
-
+    console.log("aaaaa");
     connection.query(query, filter, (err, stocks) => {
       if (err) {
         console.error('データ取得エラー:', err);
@@ -36,6 +36,23 @@ class StockController {
         return;
       }
       res.json(stocks);
+    });
+  }
+
+  // 株式情報を取得するメソッド
+  static getAllInfo(req, res) {
+    // データベースから株式情報を取得
+    const query = 'SELECT * FROM basic_info WHERE Code = ?';
+    const name = req.query.name;
+    console.log("bbbbb")
+    connection.query(query, name, (err, stocks) => {
+      if (err) {
+        console.error('データ取得エラー:', err);
+        res.status(500).json({ error: 'データ取得エラー' });
+        return;
+      }
+      res.json(stocks);
+      ;
     });
   }
 
