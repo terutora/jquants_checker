@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style scoped>
-@media (max-width: 768px) {
+@media (max-width: 796px) {
   .logo-search {
     display: flex;
     flex-direction: column;
@@ -45,6 +45,9 @@ export default {
   .logo-search input {
     width: 100%;
     margin-bottom: 5px;
+  }
+  .logo-search form {
+    margin: 0 auto;
   }
   .logo-search form .search-btn {
     display: none; /* 検索ボタンを非表示にする */
