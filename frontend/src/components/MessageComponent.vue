@@ -5,7 +5,7 @@
       <main>
         <div>
           <h1 v-if="code">{{ code }}</h1>
-          <h2 v-if="infoData">{{ infoData[0].CompanyName }}</h2>
+          <h2 v-if="infoData"><u>{{ infoData[0].CompanyName }}</u></h2>
         </div>
         <h3>企業情報</h3>  
         <table v-if="infoData">
@@ -112,18 +112,9 @@ export default {
 };
 </script>
 <style>
-@import '@/assets/css/main.css';
-
 table {
   width: 100%;
   border-collapse: collapse;
-}
-
-h2 {
-    text-indent: 0.3em;
-    width: 100%;
-    margin: 1em 0;
-    border-bottom: medium ridge black;
 }
 
 th, td {
