@@ -2,7 +2,7 @@
   <div id="app">
     <HeaderComponent />
     <div class="container">
-      <NavigationComponent />
+      <NavigationComponent class="navigation"/>
       <main>
         <ArticleComponent
           v-for="article in articles"
@@ -49,5 +49,11 @@ export default {
 
 <style>
 @import '@/assets/css/main.css';
+
+@media (max-width: 796px) {
+  .navigation {
+    display: none;
+  }
+}
 </style>
   
