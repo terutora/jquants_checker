@@ -119,6 +119,13 @@ table {
   border-collapse: collapse;
 }
 
+h2 {
+    text-indent: 0.3em;
+    width: 40%;
+    margin: 1em 0;
+    border-bottom: medium ridge black;
+}
+
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
