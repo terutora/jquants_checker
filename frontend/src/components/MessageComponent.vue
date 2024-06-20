@@ -121,7 +121,7 @@ table {
 
 h2 {
     text-indent: 0.3em;
-    width: 40%;
+    width: 100%;
     margin: 1em 0;
     border-bottom: medium ridge black;
 }
