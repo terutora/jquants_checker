@@ -24,7 +24,7 @@
             </tr>
           </tbody>  
         </table>
-    <h3>通期</h3>
+    <h3>通期[百万円]</h3>
     <table v-if="tableData">
       <thead>
         <tr>
@@ -39,16 +39,16 @@
       <tbody>
         <tr v-for="(value, key) in tableData" :key="key">
           <td v-if="value.TypeOfDocument.includes('FY')">{{ value.DisclosedDate }}</td>
-          <td v-if="value.TypeOfDocument.includes('FY')">{{ value.NetSales }}</td>
-          <td v-if="value.TypeOfDocument.includes('FY')">{{ value.OperatingProfit }}</td>
-          <td v-if="value.TypeOfDocument.includes('FY')">{{ value.OrdinaryProfit }}</td>
-          <td v-if="value.TypeOfDocument.includes('FY')">{{ value.Profit }}</td>
+          <td v-if="value.TypeOfDocument.includes('FY')">{{ addCommas(value.NetSales.slice(0, -6)) }}</td>
+          <td v-if="value.TypeOfDocument.includes('FY')">{{ addCommas(value.OperatingProfit.slice(0, -6)) }}</td>
+          <td v-if="value.TypeOfDocument.includes('FY')">{{ addCommas(value.OrdinaryProfit.slice(0, -6)) }}</td>
+          <td v-if="value.TypeOfDocument.includes('FY')">{{ addCommas(value.Profit.slice(0, -6)) }}</td>
           <td v-if="value.TypeOfDocument.includes('FY')">{{ value.EarningsPerShare }}</td>
         </tr>
       </tbody>
     </table>
 
-    <h3>四半期別</h3>
+    <h3>四半期別[百万円]</h3>
     <table v-if="tableData">
       <thead>
         <tr>
@@ -63,10 +63,10 @@
       <tbody>
         <tr v-for="(value, key) in tableData" :key="key">
           <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.DisclosedDate }}</td>
-          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.NetSales }}</td>
-          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.OperatingProfit }}</td>
-          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.OrdinaryProfit }}</td>
-          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.Profit }}</td>
+          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ addCommas(value.NetSales.slice(0, -6)) }}</td>
+          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ addCommas(value.OperatingProfit.slice(0, -6)) }}</td>
+          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ addCommas(value.OrdinaryProfit.slice(0, -6)) }}</td>
+          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ addCommas(value.Profit.slice(0, -6)) }}</td>
           <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.EarningsPerShare }}</td>
         </tr>
       </tbody>
@@ -103,6 +103,11 @@ export default {
   },
   mounted() {
     smoothScroll();
+  },
+  methods:{
+    addCommas(value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
   }
 };
 </script>
