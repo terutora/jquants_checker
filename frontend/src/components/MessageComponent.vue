@@ -109,20 +109,35 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import '@/assets/css/main.css';
 
-table {
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* レスポンシブテーブルスタイル */
+.responsive-table {
   width: 100%;
-  border-collapse: collapse;
+  overflow-x: auto;
 }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+.responsive-table th, .responsive-table td {
+  white-space: nowrap;
 }
 
-th {
-  background-color: #f2f2f2;
+/* スマホ用スタイル */
+@media screen and (max-width: 767px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  /* テーブルのスタイル調整 */
+  .responsive-table th, .responsive-table td {
+    padding: 6px 8px;
+    font-size: 14px;
+  }
 }
 </style>
