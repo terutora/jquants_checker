@@ -45,7 +45,7 @@ class StockController {
     const query = 'SELECT * FROM basic_info WHERE Code = ?';
     const name = req.query.name;
     console.log("bbbbb")
-    connection.query(query, name, (err, stocks) => {
+    connection.query(query, [name], (err, stocks) => {
       if (err) {
         console.error('データ取得エラー:', err);
         res.status(500).json({ error: 'データ取得エラー' });

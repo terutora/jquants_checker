@@ -3,12 +3,32 @@
     <HeaderComponent />
     <div class="container">
       <main>
-        <h1 v-if="code">{{ code }}</h1>
+        <div>
+          <h1 v-if="code">{{ code }}</h1>
+          <h2 v-if="infoData">{{ infoData[0].CompanyName }}</h2>
+        </div>
+        <h3>企業情報</h3>  
+        <table v-if="infoData">
+          <thead>
+            <tr>
+              <th>17業種</th>
+              <th>33業種</th>
+              <th>上場市場</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(company, index) in infoData" :key="index">
+              <td>{{ company.Sector17CodeName }}</td>
+              <td>{{ company.Sector33CodeName }}</td>
+              <td>{{ company.MarketCodeName }}</td>
+            </tr>
+          </tbody>  
+        </table>
+        
         <h3>通期</h3>
         <table v-if="tableData">
           <thead>
             <tr>
-              <th>企業名</th>
               <th>決算期</th>
               <th>売上高</th>
               <th>営業利益</th>
@@ -51,7 +71,7 @@
               <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.EarningsPerShare }}</td>
             </tr>
           </tbody>
-        </table>        
+        </table>    
       </main>
     </div>
     <footer>
@@ -75,6 +95,10 @@ export default {
       required: true
     },
     tableData: {
+      type: Array,
+      required: true
+    },
+    infoData: {
       type: Array,
       required: true
     }

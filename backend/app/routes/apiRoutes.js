@@ -10,7 +10,9 @@ router.post('/users', UserController.createUser);
 
 // 株式関連のルート
 router.get('/stocks', StockController.getAllStocks);
-router.get('/stocks', StockController.getAllInfo);
 router.post('/stocks', StockController.createStock);
+
+// 新しいエンドポイントを追加
+router.get('/info', StockController.getAllInfo);
 
 module.exports = router;
