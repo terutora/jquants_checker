@@ -5,6 +5,7 @@ export const useStockStore = defineStore('stocks', {
   state: () => ({
     code: '',
     data: null,
+    infoData: null,
     errorMessage: 'コードが見つかりませんでした'
   }),
   actions: {
