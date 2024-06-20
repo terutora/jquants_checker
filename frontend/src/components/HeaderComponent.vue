@@ -6,7 +6,8 @@
       </router-link>
       <form @submit.prevent="handleSubmit">
         <input id="searchInput" v-model="keyword" type="text" placeholder="企業コードを入力">
-        <button type="submit">検索</button>
+        <!-- スマートフォンの場合は検索ボタンを非表示にする -->
+        <button type="submit" class="search-btn">検索</button>
       </form>
     </div>
   </header>
@@ -41,12 +42,12 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-  .logo-search form {
-    margin-top: 10px;
-  }
   .logo-search input {
     width: 100%;
     margin-bottom: 5px;
+  }
+  .logo-search form .search-btn {
+    display: none; /* 検索ボタンを非表示にする */
   }
 }
 </style>
