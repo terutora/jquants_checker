@@ -127,5 +127,8 @@ th {
 }
 .company-name {
   white-space: nowrap;
+  padding-bottom: 3px;
+  border-bottom: 3px solid black; 
+  display: inline-block;
 }
 </style>
