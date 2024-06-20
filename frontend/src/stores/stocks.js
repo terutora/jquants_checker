@@ -34,6 +34,8 @@ export const useStockStore = defineStore('stocks', {
     
           // infoDataもセッションストレージに保存する
           sessionStorage.setItem('infoData', JSON.stringify(infoData));
+          
+          this.infoData = infoData;
         } else {
           this.errorMessage = 'コードが見つかりませんでした';
           alert(this.errorMessage);
