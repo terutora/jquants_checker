@@ -12,7 +12,7 @@ export const useStockStore = defineStore('stocks', {
       try {
         const modifiedKeyword = `${keyword}0`;
         // まずは http://localhost:4000/api/stocks に対してリクエストを送信し、データを取得する
-        const response = await axios.get('http://localhost:4000/api/stocks', {
+        const response = await axios.get('https://irfinder-39e9cd03a7da.herokuapp.com/api/stocks', {
           params: {
             filter: modifiedKeyword
           }
@@ -20,7 +20,7 @@ export const useStockStore = defineStore('stocks', {
         const data = response.data;
     
         // 次に http://localhost:4000/api/info に対してリクエストを送信し、追加の情報を取得する
-        const infoResponse = await axios.get('http://localhost:4000/api/info', {
+        const infoResponse = await axios.get('https://irfinder-39e9cd03a7da.herokuapp.com/api/info', {
           params: {
             name: modifiedKeyword
           }
