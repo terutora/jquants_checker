@@ -24,8 +24,6 @@
             </tr>
           </tbody>  
         </table>
-less
-コードをコピーする
     <h3>通期</h3>
     <table v-if="tableData">
       <thead>
