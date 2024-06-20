@@ -24,62 +24,62 @@
             </tr>
           </tbody>  
         </table>
-        
-        <h3>通期</h3>
-        <table v-if="tableData">
-          <thead>
-            <tr>
-              <th>決算期</th>
-              <th>売上高</th>
-              <th>営業利益</th>
-              <th>経常利益</th>
-              <th>当期純利益</th>
-              <th>EPS</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(value, key) in tableData" :key="key">
-              <td v-if="value.TypeOfDocument.includes('FY')">{{ value.DisclosedDate }}</td>
-              <td v-if="value.TypeOfDocument.includes('FY')">{{ value.NetSales }}</td>
-              <td v-if="value.TypeOfDocument.includes('FY')">{{ value.OperatingProfit }}</td>
-              <td v-if="value.TypeOfDocument.includes('FY')">{{ value.OrdinaryProfit }}</td>
-              <td v-if="value.TypeOfDocument.includes('FY')">{{ value.Profit }}</td>
-              <td v-if="value.TypeOfDocument.includes('FY')">{{ value.EarningsPerShare }}</td>
-            </tr>
-          </tbody>
-        </table>
+less
+コードをコピーする
+    <h3>通期</h3>
+    <table v-if="tableData">
+      <thead>
+        <tr>
+          <th>決算期</th>
+          <th>売上高</th>
+          <th>営業利益</th>
+          <th>経常利益</th>
+          <th>当期純利益</th>
+          <th>EPS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(value, key) in tableData" :key="key">
+          <td v-if="value.TypeOfDocument.includes('FY')">{{ value.DisclosedDate }}</td>
+          <td v-if="value.TypeOfDocument.includes('FY')">{{ value.NetSales }}</td>
+          <td v-if="value.TypeOfDocument.includes('FY')">{{ value.OperatingProfit }}</td>
+          <td v-if="value.TypeOfDocument.includes('FY')">{{ value.OrdinaryProfit }}</td>
+          <td v-if="value.TypeOfDocument.includes('FY')">{{ value.Profit }}</td>
+          <td v-if="value.TypeOfDocument.includes('FY')">{{ value.EarningsPerShare }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-        <h3>四半期別</h3>
-        <table v-if="tableData">
-          <thead>
-            <tr>
-              <th>決算期</th>
-              <th>売上高</th>
-              <th>営業利益</th>
-              <th>経常利益</th>
-              <th>当期純利益</th>
-              <th>EPS</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(value, key) in tableData" :key="key">
-              <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.DisclosedDate }}</td>
-              <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.NetSales }}</td>
-              <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.OperatingProfit }}</td>
-              <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.OrdinaryProfit }}</td>
-              <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.Profit }}</td>
-              <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.EarningsPerShare }}</td>
-            </tr>
-          </tbody>
-        </table>    
-      </main>
-    </div>
-    <footer>
-      IR Finder
-    </footer>
+    <h3>四半期別</h3>
+    <table v-if="tableData">
+      <thead>
+        <tr>
+          <th>決算期</th>
+          <th>売上高</th>
+          <th>営業利益</th>
+          <th>経常利益</th>
+          <th>当期純利益</th>
+          <th>EPS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(value, key) in tableData" :key="key">
+          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.DisclosedDate }}</td>
+          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.NetSales }}</td>
+          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.OperatingProfit }}</td>
+          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.OrdinaryProfit }}</td>
+          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.Profit }}</td>
+          <td v-if="value.TypeOfDocument.includes('Q') || value.TypeOfDocument.includes('FY')">{{ value.EarningsPerShare }}</td>
+        </tr>
+      </tbody>
+    </table>    
+  </main>
+</div>
+<footer>
+  IR Finder
+</footer>
   </div>
 </template>
-
 <script>
 import HeaderComponent from '@/components/HeaderComponent.vue';
 import smoothScroll from '@/assets/js/smoothScroll.js';
@@ -108,36 +108,20 @@ export default {
   }
 };
 </script>
-
-<style scoped>
+<style>
 @import '@/assets/css/main.css';
 
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* レスポンシブテーブルスタイル */
-.responsive-table {
+table {
   width: 100%;
-  overflow-x: auto;
+  border-collapse: collapse;
 }
 
-.responsive-table th, .responsive-table td {
-  white-space: nowrap;
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
-/* スマホ用スタイル */
-@media screen and (max-width: 767px) {
-  .container {
-    padding: 0 10px;
-  }
-
-  /* テーブルのスタイル調整 */
-  .responsive-table th, .responsive-table td {
-    padding: 6px 8px;
-    font-size: 14px;
-  }
+th {
+  background-color: #f2f2f2;
 }
 </style>
