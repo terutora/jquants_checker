@@ -33,3 +33,20 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+@media (max-width: 768px) {
+  .logo-search {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .logo-search form {
+    margin-top: 10px;
+  }
+  .logo-search input {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}
+</style>
