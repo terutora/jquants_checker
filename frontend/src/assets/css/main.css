@@ -62,7 +62,7 @@ main img {
     height: auto;
 }
 
-h2 {
+.bottomline {
     text-indent: 0.3em;
     width: 40%;
     margin: 1em 0;

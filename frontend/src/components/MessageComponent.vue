@@ -5,7 +5,7 @@
       <main>
         <div>
           <h1 v-if="code">{{ code }}</h1>
-          <h2 v-if="infoData"><u>{{ infoData[0].CompanyName }}</u></h2>
+          <h2 v-if="infoData" class="company-name">{{ infoData[0].CompanyName }}</h2>
         </div>
         <h3>企業情報</h3>  
         <table v-if="infoData">
@@ -124,5 +124,8 @@ th, td {
 
 th {
   background-color: #f2f2f2;
+}
+.company-name {
+  white-space: nowrap;
 }
 </style>
