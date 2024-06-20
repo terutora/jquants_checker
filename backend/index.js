@@ -7,6 +7,12 @@ const cors = require('cors');
 // CORSの設定
 app.use(cors());
 
+// Permissions-Policy ヘッダーを設定するミドルウェア
+app.use((req, res, next) => {
+  res.setHeader('Permissions-Policy', 'your-policy-directives-here');
+  next();
+});
+
 // ミドルウェアの設定やルーティングの設定
 app.use('/api', userRoutes);
 
