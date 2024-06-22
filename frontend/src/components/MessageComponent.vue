@@ -80,7 +80,6 @@
 </template>
 <script>
 import HeaderComponent from '@/components/HeaderComponent.vue';
-import smoothScroll from '@/assets/js/smoothScroll.js';
 
 export default {
   name: 'MessagePage',
@@ -101,9 +100,7 @@ export default {
       required: true
     }
   },
-  mounted() {
-    smoothScroll();
-  },
+
   methods:{
     addCommas(value) {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
