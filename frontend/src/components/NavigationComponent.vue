@@ -7,7 +7,6 @@
         <li><a href="#2023">2023年</a></li>
         <li><a href="#2022">2022年</a></li>
       </ul>
-      <li><a href="st_schedule">決算スケジュール</a></li>
     </ul>
   </nav>
 </template>
